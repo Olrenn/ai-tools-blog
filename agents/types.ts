@@ -107,7 +107,7 @@ export const CuratorDecisionSchema = z.object({
   reasoning: z.string().describe("Explanation for the decision"),
   revisionInstructions: z
     .string()
-    .optional()
+    .nullish()
     .describe("Specific instructions for revision (only if revise)"),
   qualityScore: z.preprocess(
     (val) => typeof val === "string" ? parseFloat(val) : val,
