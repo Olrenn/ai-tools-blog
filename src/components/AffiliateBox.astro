@@ -1,0 +1,32 @@
+---
+interface Props {
+  toolName: string;
+  url: string;
+  commission?: string;
+}
+
+const { toolName, url, commission } = Astro.props;
+---
+
+<aside class="my-8 p-6 bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-xl">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div>
+      <p class="font-bold text-lg">{toolName} jetzt testen</p>
+      <p class="text-text-muted text-sm mt-1">
+        Überzeuge dich selbst — viele Tools bieten einen kostenlosen Plan.
+      </p>
+    </div>
+    <a
+      href={url}
+      target="_blank"
+      rel="sponsored nofollow noopener"
+      class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-semibold transition-colors shrink-0"
+    >
+      Zu {toolName}
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 17L17 7M17 7H7M17 7V17" />
+      </svg>
+    </a>
+  </div>
+  <p class="text-xs text-text-muted mt-3">* Affiliate-Link — bei einem Kauf erhalten wir eine Provision.</p>
+</aside>

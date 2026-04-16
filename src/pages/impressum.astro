@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout title="Impressum" description="Impressum von KI-Tools Vergleich">
+  <Header />
+  <main class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-6">Impressum</h1>
+    <div class="prose">
+      <p><strong>Angaben gemäß § 5 TMG:</strong></p>
+      <p>
+        [Dein Name]<br />
+        [Deine Adresse]<br />
+        [PLZ Stadt]
+      </p>
+      <h2>Kontakt</h2>
+      <p>E-Mail: kontakt@ki-tools-vergleich.de</p>
+      <h2>Haftungsausschluss</h2>
+      <p>
+        Die Inhalte dieser Seite wurden mit größter Sorgfalt erstellt. Für die Richtigkeit,
+        Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
+      </p>
+      <h2>Affiliate-Links</h2>
+      <p>
+        Diese Website enthält Affiliate-Links. Bei einem Kauf über diese Links erhalten wir
+        eine Provision. Dies beeinflusst unsere redaktionelle Unabhängigkeit nicht.
+      </p>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

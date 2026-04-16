@@ -1,0 +1,25 @@
+---
+interface Props {
+  name: string;
+  rating: number;
+}
+
+const { name, rating } = Astro.props;
+const fullStars = Math.floor(rating);
+const hasHalf = rating % 1 >= 0.5;
+const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
+---
+
+<div class="my-8 p-6 bg-surface rounded-xl border border-border text-center">
+  <p class="text-sm text-text-muted mb-2">Unsere Bewertung für {name}</p>
+  <div class="flex items-center justify-center gap-1 text-3xl">
+    {Array.from({ length: fullStars }).map(() => (
+      <span class="text-yellow-400">★</span>
+    ))}
+    {hasHalf && <span class="text-yellow-400">★</span>}
+    {Array.from({ length: emptyStars }).map(() => (
+      <span class="text-gray-300">★</span>
+    ))}
+  </div>
+  <p class="text-2xl font-bold mt-2">{rating} / 5</p>
+</div>

@@ -1,0 +1,56 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  pubDate: Date;
+  heroImage?: string;
+  category: string;
+  rating: number;
+  toolName: string;
+}
+
+const { title, description, slug, pubDate, heroImage, category, rating, toolName } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString("de-DE", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const stars = "★".repeat(Math.round(rating)) + "☆".repeat(5 - Math.round(rating));
+---
+
+<article class="group border border-border rounded-xl overflow-hidden hover:shadow-lg transition-shadow">
+  {heroImage && (
+    <a href={`/blog/${slug}`}>
+      <img
+        src={heroImage}
+        alt={`${toolName} Review`}
+        class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        loading="lazy"
+      />
+    </a>
+  )}
+  <div class="p-5">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
+        {category}
+      </span>
+      <span class="text-xs text-accent font-medium">{stars}</span>
+    </div>
+
+    <h2 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors">
+      <a href={`/blog/${slug}`}>{title}</a>
+    </h2>
+
+    <p class="text-text-muted text-sm mb-3 line-clamp-2">{description}</p>
+
+    <div class="flex items-center justify-between text-xs text-text-muted">
+      <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+      <a href={`/blog/${slug}`} class="text-primary font-medium hover:underline">
+        Weiterlesen →
+      </a>
+    </div>
+  </div>
+</article>

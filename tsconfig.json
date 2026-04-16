@@ -1,0 +1,14 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@agents/*": ["agents/*"],
+      "@pipeline/*": ["pipeline/*"],
+      "@data/*": ["data/*"]
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  }
+}

@@ -1,0 +1,100 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+const post = Astro.props;
+const { Content } = await post.render();
+
+const formattedDate = post.data.pubDate.toLocaleDateString("de-DE", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.heroImage}
+  article={true}
+>
+  <Header />
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <article>
+      <!-- Breadcrumb -->
+      <nav class="text-sm text-text-muted mb-6">
+        <a href="/" class="hover:text-primary">Start</a>
+        <span class="mx-2">/</span>
+        <a href="/blog" class="hover:text-primary">Blog</a>
+        <span class="mx-2">/</span>
+        <span>{post.data.toolName}</span>
+      </nav>
+
+      <!-- Hero Image -->
+      {post.data.heroImage && (
+        <img
+          src={post.data.heroImage}
+          alt={post.data.heroAlt ?? post.data.title}
+          class="w-full h-64 md:h-80 object-cover rounded-xl mb-8"
+        />
+      )}
+
+      <!-- Meta -->
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
+          {post.data.category}
+        </span>
+        <time class="text-sm text-text-muted" datetime={post.data.pubDate.toISOString()}>
+          {formattedDate}
+        </time>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">{post.data.title}</h1>
+
+      <!-- Affiliate Disclosure -->
+      <div class="affiliate-disclosure">
+        Einige Links in diesem Artikel sind Affiliate-Links. Bei einem Kauf erhalten wir eine Provision — ohne Mehrkosten für dich.
+      </div>
+
+      <!-- Article Content -->
+      <div class="prose prose-lg max-w-none">
+        <Content />
+      </div>
+    </article>
+  </main>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "itemReviewed": {
+      "@type": "SoftwareApplication",
+      "name": post.data.toolName,
+      "url": post.data.toolUrl,
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": post.data.rating,
+      "bestRating": 5,
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "KI-Tools Vergleich",
+    },
+    "datePublished": post.data.pubDate.toISOString(),
+  })} />
+
+  <Footer />
+</BaseLayout>

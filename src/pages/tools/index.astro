@@ -1,0 +1,72 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.rating - a.data.rating);
+
+const categories = [...new Set(posts.map((p) => p.data.category))];
+---
+
+<BaseLayout
+  title="AI-Tool Verzeichnis"
+  description="Alle getesteten AI-Tools auf einen Blick. Sortiert nach Kategorie und Bewertung."
+>
+  <Header />
+
+  <main class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-4">Tool-Verzeichnis</h1>
+    <p class="text-text-muted mb-8">Alle getesteten AI-Tools auf einen Blick.</p>
+
+    {categories.length > 0 ? (
+      categories.map((category) => {
+        const categoryPosts = posts.filter((p) => p.data.category === category);
+        return (
+          <section class="mb-12">
+            <h2 class="text-xl font-bold mb-4 capitalize">{category}</h2>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-border text-left">
+                    <th class="py-3 pr-4 font-semibold">Tool</th>
+                    <th class="py-3 pr-4 font-semibold">Bewertung</th>
+                    <th class="py-3 pr-4 font-semibold hidden md:table-cell">Beschreibung</th>
+                    <th class="py-3 font-semibold">Review</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categoryPosts.map((post) => (
+                    <tr class="border-b border-border/50 hover:bg-surface">
+                      <td class="py-3 pr-4 font-medium">{post.data.toolName}</td>
+                      <td class="py-3 pr-4 text-yellow-500">
+                        {"★".repeat(Math.round(post.data.rating))}{"☆".repeat(5 - Math.round(post.data.rating))}
+                        <span class="text-text-muted ml-1">{post.data.rating}/5</span>
+                      </td>
+                      <td class="py-3 pr-4 text-text-muted hidden md:table-cell line-clamp-1">
+                        {post.data.description}
+                      </td>
+                      <td class="py-3">
+                        <a href={`/blog/${post.slug}`} class="text-primary hover:underline">
+                          Lesen →
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        );
+      })
+    ) : (
+      <p class="text-text-muted text-center py-12">
+        Noch keine Tools getestet. Bald erscheinen hier die ersten Reviews.
+      </p>
+    )}
+  </main>
+
+  <Footer />
+</BaseLayout>

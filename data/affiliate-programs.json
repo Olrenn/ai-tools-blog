@@ -1,0 +1,53 @@
+{
+  "programs": [
+    {
+      "toolName": "ChatGPT",
+      "affiliateUrl": "https://chat.openai.com",
+      "commission": "N/A",
+      "cookieDuration": "N/A",
+      "program": "Direct"
+    },
+    {
+      "toolName": "Jasper",
+      "affiliateUrl": "https://www.jasper.ai?fpr=ki-tools",
+      "commission": "30% recurring",
+      "cookieDuration": "30 days",
+      "program": "Jasper Partner"
+    },
+    {
+      "toolName": "Notion",
+      "affiliateUrl": "https://affiliate.notion.so/ki-tools",
+      "commission": "50% first payment",
+      "cookieDuration": "90 days",
+      "program": "Notion Affiliates"
+    },
+    {
+      "toolName": "Midjourney",
+      "affiliateUrl": "https://www.midjourney.com",
+      "commission": "N/A",
+      "cookieDuration": "N/A",
+      "program": "Direct"
+    },
+    {
+      "toolName": "Grammarly",
+      "affiliateUrl": "https://www.grammarly.com?via=ki-tools",
+      "commission": "$25 per activation",
+      "cookieDuration": "90 days",
+      "program": "Grammarly Affiliates"
+    },
+    {
+      "toolName": "Canva",
+      "affiliateUrl": "https://partner.canva.com/ki-tools",
+      "commission": "Up to $36 per sale",
+      "cookieDuration": "30 days",
+      "program": "Canva Affiliates"
+    },
+    {
+      "toolName": "Surfer SEO",
+      "affiliateUrl": "https://surferseo.com?fpr=ki-tools",
+      "commission": "25% recurring",
+      "cookieDuration": "60 days",
+      "program": "Surfer Partners"
+    }
+  ]
+}

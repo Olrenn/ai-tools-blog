@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout title="Datenschutzerklärung" description="Datenschutzerklärung von KI-Tools Vergleich">
+  <Header />
+  <main class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-6">Datenschutzerklärung</h1>
+    <div class="prose">
+      <h2>1. Verantwortlicher</h2>
+      <p>[Dein Name], [Deine Adresse]. Kontakt: kontakt@ki-tools-vergleich.de</p>
+
+      <h2>2. Hosting</h2>
+      <p>
+        Diese Website wird bei Vercel Inc. gehostet. Beim Besuch werden automatisch
+        Server-Logfiles erfasst (IP-Adresse, Browsertyp, Zugriffszeitpunkt).
+        Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.
+      </p>
+
+      <h2>3. Cookies</h2>
+      <p>
+        Diese Website verwendet keine Tracking-Cookies. Es werden keine personenbezogenen
+        Daten zu Werbezwecken erfasst.
+      </p>
+
+      <h2>4. Analytics</h2>
+      <p>
+        Wir verwenden eine datenschutzfreundliche Analytics-Lösung ohne Cookies
+        und ohne personenbezogene Daten.
+      </p>
+
+      <h2>5. Affiliate-Links</h2>
+      <p>
+        Diese Website enthält Affiliate-Links zu externen Anbietern. Beim Klick auf
+        diese Links können die Anbieter Cookies setzen. Bitte beachte die
+        Datenschutzerklärungen der jeweiligen Anbieter.
+      </p>
+
+      <h2>6. Deine Rechte</h2>
+      <p>
+        Du hast das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der
+        Verarbeitung deiner Daten. Kontaktiere uns unter kontakt@ki-tools-vergleich.de.
+      </p>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

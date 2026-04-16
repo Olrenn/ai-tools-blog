@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="Alle AI-Tool Reviews"
+  description="Übersicht aller AI-Tool Reviews und Vergleiche. Finde das perfekte KI-Tool für deine Bedürfnisse."
+>
+  <Header />
+
+  <main class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-8">Alle Reviews</h1>
+
+    {posts.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map((post) => (
+          <ArticleCard
+            title={post.data.title}
+            description={post.data.description}
+            slug={post.slug}
+            pubDate={post.data.pubDate}
+            heroImage={post.data.heroImage}
+            category={post.data.category}
+            rating={post.data.rating}
+            toolName={post.data.toolName}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="text-text-muted text-center py-12">
+        Noch keine Artikel vorhanden. Bald erscheinen hier automatisch neue Reviews.
+      </p>
+    )}
+  </main>
+
+  <Footer />
+</BaseLayout>

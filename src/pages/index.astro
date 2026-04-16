@@ -1,0 +1,93 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6);
+---
+
+<BaseLayout
+  title="Die besten AI-Tools im Vergleich"
+  description="Unabhängige Reviews und Vergleiche der besten KI-Tools für Texterstellung, Bildgenerierung, Coding und Produktivität."
+>
+  <Header />
+
+  <main>
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-surface to-white py-20">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-text">
+          Die besten <span class="text-primary">AI-Tools</span> im Vergleich
+        </h1>
+        <p class="text-xl text-text-muted max-w-2xl mx-auto mb-8">
+          Ehrliche Reviews, detaillierte Vergleiche und Praxistipps.
+          Finde das richtige KI-Tool für deine Arbeit.
+        </p>
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+        >
+          Alle Reviews ansehen
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Latest Articles -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+      <h2 class="text-2xl font-bold mb-8">Neueste Reviews</h2>
+
+      {posts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <ArticleCard
+              title={post.data.title}
+              description={post.data.description}
+              slug={post.slug}
+              pubDate={post.data.pubDate}
+              heroImage={post.data.heroImage}
+              category={post.data.category}
+              rating={post.data.rating}
+              toolName={post.data.toolName}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-text-muted text-center py-12">
+          Noch keine Artikel vorhanden. Die ersten Reviews werden bald automatisch veröffentlicht.
+        </p>
+      )}
+    </section>
+
+    <!-- Categories -->
+    <section class="bg-surface py-16">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-2xl font-bold mb-8 text-center">Kategorien</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { name: "Texterstellung", icon: "pencil", slug: "writing" },
+            { name: "Bildgenerierung", icon: "image", slug: "image" },
+            { name: "Coding", icon: "code", slug: "coding" },
+            { name: "Produktivität", icon: "zap", slug: "productivity" },
+          ].map((cat) => (
+            <a
+              href={`/tools?category=${cat.slug}`}
+              class="p-6 bg-white rounded-xl border border-border hover:border-primary hover:shadow-md transition-all text-center"
+            >
+              <p class="font-semibold mt-2">{cat.name}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
