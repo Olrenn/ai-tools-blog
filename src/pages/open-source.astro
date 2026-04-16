@@ -1,0 +1,71 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft && post.data.format === "open-source")
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const allPosts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft && post.data.tags?.some(t =>
+    ["open-source", "self-hosted", "lokal", "ollama", "llama"].includes(t.toLowerCase())
+  ))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const displayPosts = posts.length > 0 ? posts : allPosts;
+---
+
+<BaseLayout
+  title="Open-Source AI-Tools — Kostenlos, lokal, unter deiner Kontrolle"
+  description="Die besten Open-Source AI-Tools: LLMs lokal betreiben, Daten behalten, Geld sparen. Ollama, LM Studio, Stable Diffusion und mehr."
+>
+  <Header />
+
+  <main>
+    <section class="gradient-bg py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-sm text-orange-300 mb-6">
+          <span class="text-lg">&#128187;</span> Deine Daten. Dein Server. Deine Regeln.
+        </div>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+          <span class="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">Open Source</span> AI-Tools
+        </h1>
+        <p class="text-lg text-gray-300 max-w-2xl leading-relaxed">
+          Warum monatlich zahlen, wenn du AI-Modelle lokal und kostenlos betreiben kannst?
+          Hier findest du die besten Open-Source-Alternativen — mit voller Kontrolle über deine Daten.
+        </p>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 py-16">
+      {displayPosts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          {displayPosts.map((post) => (
+            <ArticleCard
+              title={post.data.title}
+              description={post.data.description}
+              slug={post.id.replace(/\.mdx?$/, "")}
+              pubDate={post.data.pubDate}
+              heroImage={post.data.heroImage}
+              category={post.data.category}
+              rating={post.data.rating ?? 0}
+              toolName={post.data.toolName}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <p class="text-5xl mb-4">&#129302;</p>
+          <p class="text-xl font-bold text-text mb-2">Bald verfügbar</p>
+          <p class="text-text-muted">Open-Source Guides kommen bald. Lokal LLMs, Self-Hosted und mehr!</p>
+          <a href="/blog" class="btn-primary mt-6 inline-flex">Alle Artikel ansehen</a>
+        </div>
+      )}
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

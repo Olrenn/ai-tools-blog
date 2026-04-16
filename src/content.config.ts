@@ -10,11 +10,15 @@ const blog = defineCollection({
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
     heroAlt: z.string().optional(),
+    format: z.enum([
+      "review", "comparison", "free-tools",
+      "open-source", "pricing-guide", "roundup", "tutorial",
+    ]).default("review"),
     category: z.string(),
     tags: z.array(z.string()).default([]),
     toolName: z.string(),
-    toolUrl: z.string().url(),
-    rating: z.number().min(1).max(5),
+    toolUrl: z.string(),
+    rating: z.number().min(1).max(5).nullish(),
     draft: z.boolean().default(false),
   }),
 });

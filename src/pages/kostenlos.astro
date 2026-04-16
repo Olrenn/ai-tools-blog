@@ -1,0 +1,71 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft && post.data.format === "free-tools")
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const allPosts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft && post.data.tags?.some(t =>
+    ["kostenlos", "gratis", "free", "open-source"].includes(t.toLowerCase())
+  ))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const displayPosts = posts.length > 0 ? posts : allPosts;
+---
+
+<BaseLayout
+  title="Kostenlose AI-Tools — Die besten Gratis-Alternativen"
+  description="Die besten kostenlosen AI-Tools im Überblick. Texterstellung, Bildgenerierung, Coding und mehr — komplett gratis."
+>
+  <Header />
+
+  <main>
+    <section class="gradient-bg py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-sm text-emerald-300 mb-6">
+          <span class="text-lg">&#128176;</span> $0 Budget? Kein Problem.
+        </div>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+          Kostenlose <span class="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">AI-Tools</span>
+        </h1>
+        <p class="text-lg text-gray-300 max-w-2xl leading-relaxed">
+          Du brauchst kein Budget für leistungsstarke KI-Tools. Hier findest du die besten
+          kostenlosen Optionen — von Chatbots über Bildgeneratoren bis zu Coding-Assistenten.
+        </p>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 py-16">
+      {displayPosts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          {displayPosts.map((post) => (
+            <ArticleCard
+              title={post.data.title}
+              description={post.data.description}
+              slug={post.id.replace(/\.mdx?$/, "")}
+              pubDate={post.data.pubDate}
+              heroImage={post.data.heroImage}
+              category={post.data.category}
+              rating={post.data.rating ?? 0}
+              toolName={post.data.toolName}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <p class="text-5xl mb-4">&#128640;</p>
+          <p class="text-xl font-bold text-text mb-2">Bald verfügbar</p>
+          <p class="text-text-muted">Wir arbeiten an Guides zu den besten kostenlosen AI-Tools. Schau bald wieder vorbei!</p>
+          <a href="/blog" class="btn-primary mt-6 inline-flex">Alle Artikel ansehen</a>
+        </div>
+      )}
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

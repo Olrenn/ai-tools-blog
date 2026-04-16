@@ -7,11 +7,12 @@ interface SEOFrontmatter {
   updatedDate: string;
   heroImage: string;
   heroAlt: string;
+  format: string;
   category: string;
   tags: string[];
   toolName: string;
   toolUrl: string;
-  rating: number;
+  rating: number | null;
   draft: boolean;
   schema: object;
 }
@@ -61,18 +62,30 @@ export function generateSEOFrontmatter(draft: ArticleDraft, heroImagePath: strin
     })),
   };
 
+  const format = draft.format ?? "review";
+
+  // Build tags based on format
+  const tags = [draft.toolName.toLowerCase(), draft.category, "ai-tools"];
+  if (format === "free-tools") tags.push("kostenlos", "gratis");
+  if (format === "open-source") tags.push("open-source", "self-hosted");
+  if (format === "pricing-guide") tags.push("preise", "kosten");
+  if (format === "comparison") tags.push("vergleich");
+  if (format === "roundup") tags.push("top-liste");
+  if (format === "tutorial") tags.push("anleitung", "tutorial");
+
   return {
     title: draft.title,
     description: draft.metaDescription,
     pubDate: now,
     updatedDate: now,
     heroImage: heroImagePath,
-    heroAlt: `${draft.toolName} Review - Screenshot und Bewertung`,
+    heroAlt: `${draft.toolName} - ${draft.title}`,
+    format,
     category: draft.category,
-    tags: draft.faq.length > 0 ? [draft.toolName.toLowerCase(), draft.category, "ai-tools", "review"] : [draft.category, "ai-tools"],
+    tags: [...new Set(tags)],
     toolName: draft.toolName,
     toolUrl: draft.toolUrl,
-    rating: draft.rating,
+    rating: draft.rating ?? null,
     draft: false,
     schema: { review: schema, faq: faqSchema },
   };
@@ -90,11 +103,12 @@ export function buildMDXFile(draft: ArticleDraft, frontmatter: SEOFrontmatter): 
     `updatedDate: "${frontmatter.updatedDate}"`,
     `heroImage: "${frontmatter.heroImage}"`,
     `heroAlt: "${escapeYaml(frontmatter.heroAlt)}"`,
+    `format: "${frontmatter.format}"`,
     `category: "${frontmatter.category}"`,
     `tags: [${frontmatter.tags.map((t) => `"${t}"`).join(", ")}]`,
     `toolName: "${escapeYaml(frontmatter.toolName)}"`,
     `toolUrl: "${frontmatter.toolUrl}"`,
-    `rating: ${frontmatter.rating}`,
+    frontmatter.rating !== null ? `rating: ${frontmatter.rating}` : "",
     `draft: ${frontmatter.draft}`,
     "---",
     "",

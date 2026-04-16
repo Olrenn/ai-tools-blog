@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft && (
+    post.data.format === "pricing-guide" ||
+    post.data.format === "comparison" ||
+    post.data.tags?.some(t => ["preise", "pricing", "kosten", "budget"].includes(t.toLowerCase()))
+  ))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="AI-Tools Preise — Vergleiche, Budgets und Spartipps"
+  description="Was kosten AI-Tools? Preisvergleiche, Budget-Guides und Tipps wie du das beste Preis-Leistungs-Verhältnis findest."
+>
+  <Header />
+
+  <main>
+    <section class="gradient-bg py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-sm text-primary-light mb-6">
+          <span class="text-lg">&#128184;</span> Maximaler Wert pro Euro
+        </div>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+          AI-Tools <span class="bg-gradient-to-r from-primary-light to-accent bg-clip-text text-transparent">Preise &amp; Budgets</span>
+        </h1>
+        <p class="text-lg text-gray-300 max-w-2xl leading-relaxed">
+          Was bekommst du für dein Geld? Ehrliche Preisvergleiche, Budget-Empfehlungen
+          und Spartipps — damit du nicht mehr zahlst als nötig.
+        </p>
+
+        <!-- Price Tiers Overview -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 max-w-3xl">
+          <div class="glass rounded-xl p-4 text-center">
+            <p class="text-2xl font-bold text-emerald-400">$0</p>
+            <p class="text-xs text-gray-400 mt-1">Kostenlos</p>
+          </div>
+          <div class="glass rounded-xl p-4 text-center">
+            <p class="text-2xl font-bold text-blue-400">$20</p>
+            <p class="text-xs text-gray-400 mt-1">Einsteiger</p>
+          </div>
+          <div class="glass rounded-xl p-4 text-center">
+            <p class="text-2xl font-bold text-purple-400">$100</p>
+            <p class="text-xs text-gray-400 mt-1">Profi</p>
+          </div>
+          <div class="glass rounded-xl p-4 text-center">
+            <p class="text-2xl font-bold text-amber-400">$200+</p>
+            <p class="text-xs text-gray-400 mt-1">Power User</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 py-16">
+      {posts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          {posts.map((post) => (
+            <ArticleCard
+              title={post.data.title}
+              description={post.data.description}
+              slug={post.id.replace(/\.mdx?$/, "")}
+              pubDate={post.data.pubDate}
+              heroImage={post.data.heroImage}
+              category={post.data.category}
+              rating={post.data.rating ?? 0}
+              toolName={post.data.toolName}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <p class="text-5xl mb-4">&#128200;</p>
+          <p class="text-xl font-bold text-text mb-2">Bald verfügbar</p>
+          <p class="text-text-muted">Pricing-Guides und Budget-Vergleiche kommen bald!</p>
+          <a href="/blog" class="btn-primary mt-6 inline-flex">Alle Artikel ansehen</a>
+        </div>
+      )}
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
