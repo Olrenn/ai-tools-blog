@@ -19,33 +19,80 @@ const posts = (await getCollection("blog"))
 
   <main>
     <!-- Hero -->
-    <section class="bg-gradient-to-br from-surface to-white py-20">
-      <div class="max-w-6xl mx-auto px-4 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-text">
-          Die besten <span class="text-primary">AI-Tools</span> im Vergleich
-        </h1>
-        <p class="text-xl text-text-muted max-w-2xl mx-auto mb-8">
-          Ehrliche Reviews, detaillierte Vergleiche und Praxistipps.
-          Finde das richtige KI-Tool für deine Arbeit.
-        </p>
-        <a
-          href="/blog"
-          class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-semibold transition-colors"
-        >
-          Alle Reviews ansehen
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
+    <section class="gradient-bg relative overflow-hidden">
+      <!-- Decorative elements -->
+      <div class="absolute inset-0">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-20 w-96 h-96 bg-accent/8 rounded-full blur-3xl"></div>
+        <div class="absolute top-40 right-40 w-48 h-48 bg-purple-500/5 rounded-full blur-2xl"></div>
+      </div>
+
+      <div class="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300 mb-6 backdrop-blur-sm">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Aktualisiert: April 2026
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-[1.1] tracking-tight">
+            Die besten<br/>
+            <span class="bg-gradient-to-r from-primary-light to-accent bg-clip-text text-transparent">AI-Tools</span>
+            im Vergleich
+          </h1>
+
+          <p class="text-lg md:text-xl text-gray-300 max-w-xl mb-10 leading-relaxed">
+            Ehrliche Reviews, detaillierte Vergleiche und Praxistipps.
+            Finde das richtige KI-Tool für deine Arbeit.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <a href="/blog" class="btn-primary">
+              Alle Reviews ansehen
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a href="/tools" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 text-white hover:bg-white/5 transition-all font-medium text-sm">
+              Tool-Verzeichnis
+            </a>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="mt-16 grid grid-cols-3 gap-6 max-w-md">
+          <div class="text-center">
+            <p class="text-3xl font-bold text-white">{posts.length}+</p>
+            <p class="text-xs text-gray-400 mt-1">Reviews</p>
+          </div>
+          <div class="text-center">
+            <p class="text-3xl font-bold text-white">5</p>
+            <p class="text-xs text-gray-400 mt-1">Kategorien</p>
+          </div>
+          <div class="text-center">
+            <p class="text-3xl font-bold text-white">3x</p>
+            <p class="text-xs text-gray-400 mt-1">pro Woche</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Latest Articles -->
-    <section class="max-w-6xl mx-auto px-4 py-16">
-      <h2 class="text-2xl font-bold mb-8">Neueste Reviews</h2>
+    <section class="max-w-6xl mx-auto px-6 py-20">
+      <div class="flex items-end justify-between mb-10">
+        <div>
+          <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-2">Neueste Artikel</p>
+          <h2 class="text-3xl font-bold text-text">Aktuelle Reviews</h2>
+        </div>
+        <a href="/blog" class="hidden md:flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark transition-colors">
+          Alle ansehen
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
 
       {posts.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {posts.map((post) => (
             <ArticleCard
               title={post.data.title}
@@ -60,28 +107,33 @@ const posts = (await getCollection("blog"))
           ))}
         </div>
       ) : (
-        <p class="text-text-muted text-center py-12">
+        <p class="text-text-muted text-center py-16">
           Noch keine Artikel vorhanden. Die ersten Reviews werden bald automatisch veröffentlicht.
         </p>
       )}
     </section>
 
     <!-- Categories -->
-    <section class="bg-surface py-16">
-      <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-2xl font-bold mb-8 text-center">Kategorien</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <section class="bg-surface py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-2">Entdecken</p>
+          <h2 class="text-3xl font-bold">Kategorien</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
           {[
-            { name: "Texterstellung", icon: "pencil", slug: "writing" },
-            { name: "Bildgenerierung", icon: "image", slug: "image" },
-            { name: "Coding", icon: "code", slug: "coding" },
-            { name: "Produktivität", icon: "zap", slug: "productivity" },
+            { name: "Texterstellung", desc: "Jasper, Copy.ai & mehr", emoji: "&#9997;&#65039;", slug: "writing" },
+            { name: "Bildgenerierung", desc: "Midjourney, DALL-E & mehr", emoji: "&#127912;", slug: "image" },
+            { name: "Coding", desc: "Claude Code, Copilot & mehr", emoji: "&#128187;", slug: "coding" },
+            { name: "Produktivität", desc: "Notion AI, Otter & mehr", emoji: "&#9889;", slug: "productivity" },
           ].map((cat) => (
             <a
               href={`/tools?category=${cat.slug}`}
-              class="p-6 bg-white rounded-xl border border-border hover:border-primary hover:shadow-md transition-all text-center"
+              class="card p-6 text-center glow-hover cursor-pointer"
             >
-              <p class="font-semibold mt-2">{cat.name}</p>
+              <span class="text-3xl block mb-3" set:html={cat.emoji} />
+              <p class="font-bold text-text">{cat.name}</p>
+              <p class="text-xs text-text-muted mt-1">{cat.desc}</p>
             </a>
           ))}
         </div>

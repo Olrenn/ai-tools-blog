@@ -8,18 +8,29 @@ const { name, rating } = Astro.props;
 const fullStars = Math.floor(rating);
 const hasHalf = rating % 1 >= 0.5;
 const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
+const percentage = (rating / 5) * 100;
 ---
 
-<div class="my-8 p-6 bg-surface rounded-xl border border-border text-center">
-  <p class="text-sm text-text-muted mb-2">Unsere Bewertung für {name}</p>
-  <div class="flex items-center justify-center gap-1 text-3xl">
+<div class="my-10 p-8 bg-gradient-to-br from-surface to-white rounded-2xl border border-border text-center glow-primary">
+  <p class="text-sm text-text-muted mb-3 font-medium uppercase tracking-wider">Unsere Bewertung</p>
+  <p class="text-lg font-bold text-text mb-4">{name}</p>
+
+  <div class="flex items-center justify-center gap-1.5 text-3xl mb-3">
     {Array.from({ length: fullStars }).map(() => (
-      <span class="text-yellow-400">★</span>
+      <span class="text-amber-400 drop-shadow-sm">&#9733;</span>
     ))}
-    {hasHalf && <span class="text-yellow-400">★</span>}
+    {hasHalf && <span class="text-amber-400 drop-shadow-sm">&#9733;</span>}
     {Array.from({ length: emptyStars }).map(() => (
-      <span class="text-gray-300">★</span>
+      <span class="text-gray-200">&#9733;</span>
     ))}
   </div>
-  <p class="text-2xl font-bold mt-2">{rating} / 5</p>
+
+  <p class="text-4xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+    {rating} / 5
+  </p>
+
+  <!-- Visual bar -->
+  <div class="mt-5 mx-auto w-48 h-2 bg-gray-100 rounded-full overflow-hidden">
+    <div class="h-full bg-gradient-to-r from-primary to-accent rounded-full" style={`width: ${percentage}%`}></div>
+  </div>
 </div>

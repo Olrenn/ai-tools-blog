@@ -5,14 +5,17 @@ interface Props {
   commission?: string;
 }
 
-const { toolName, url, commission } = Astro.props;
+const { toolName, url } = Astro.props;
 ---
 
-<aside class="my-8 p-6 bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-xl">
-  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<aside class="my-10 p-7 bg-gradient-to-r from-primary/[0.04] via-accent/[0.04] to-primary/[0.04] border border-primary/15 rounded-2xl relative overflow-hidden">
+  <!-- Decorative -->
+  <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full"></div>
+
+  <div class="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
     <div>
-      <p class="font-bold text-lg">{toolName} jetzt testen</p>
-      <p class="text-text-muted text-sm mt-1">
+      <p class="font-bold text-lg text-text">{toolName} jetzt testen</p>
+      <p class="text-text-muted text-sm mt-1.5 leading-relaxed">
         Überzeuge dich selbst — viele Tools bieten einen kostenlosen Plan.
       </p>
     </div>
@@ -20,13 +23,13 @@ const { toolName, url, commission } = Astro.props;
       href={url}
       target="_blank"
       rel="sponsored nofollow noopener"
-      class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-semibold transition-colors shrink-0"
+      class="btn-primary shrink-0"
     >
       Zu {toolName}
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <path d="M7 17L17 7M17 7H7M17 7V17" />
       </svg>
     </a>
   </div>
-  <p class="text-xs text-text-muted mt-3">* Affiliate-Link — bei einem Kauf erhalten wir eine Provision.</p>
+  <p class="relative text-xs text-text-light mt-4">* Affiliate-Link — bei einem Kauf erhalten wir eine Provision.</p>
 </aside>

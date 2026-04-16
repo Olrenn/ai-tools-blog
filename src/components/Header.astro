@@ -7,23 +7,27 @@ const navItems = [
 ];
 ---
 
-<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border">
-  <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-2 text-xl font-bold text-primary">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2L2 7l10 5 10-5-10-5z" />
-        <path d="M2 17l10 5 10-5" />
-        <path d="M2 12l10 5 10-5" />
-      </svg>
-      KI-Tools Vergleich
+<header class="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-border/50">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5 group">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5" />
+          <path d="M2 12l10 5 10-5" />
+        </svg>
+      </div>
+      <span class="text-lg font-bold tracking-tight text-text">
+        KI-Tools <span class="text-primary">Vergleich</span>
+      </span>
     </a>
 
-    <ul class="hidden md:flex items-center gap-6">
+    <ul class="hidden md:flex items-center gap-1">
       {navItems.map((item) => (
         <li>
           <a
             href={item.href}
-            class="text-text-muted hover:text-primary transition-colors text-sm font-medium"
+            class="px-4 py-2 rounded-lg text-text-muted hover:text-text hover:bg-surface transition-all text-sm font-medium"
           >
             {item.label}
           </a>

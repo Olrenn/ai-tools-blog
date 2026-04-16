@@ -7,35 +7,39 @@ interface Props {
 const { pros, cons } = Astro.props;
 ---
 
-<div class="my-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-  <div class="p-5 bg-green-50 border border-green-200 rounded-xl">
-    <h3 class="font-bold text-green-800 mb-3 flex items-center gap-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M20 6L9 17l-5-5" />
-      </svg>
+<div class="my-10 grid grid-cols-1 md:grid-cols-2 gap-5">
+  <div class="p-6 bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-200/60 rounded-2xl">
+    <h3 class="font-bold text-emerald-800 mb-4 flex items-center gap-2.5 text-base">
+      <div class="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+      </div>
       Vorteile
     </h3>
-    <ul class="space-y-2">
+    <ul class="space-y-2.5">
       {pros.map((pro) => (
-        <li class="flex items-start gap-2 text-sm text-green-900">
-          <span class="text-green-500 mt-0.5">+</span>
+        <li class="flex items-start gap-2.5 text-sm text-emerald-900 leading-relaxed">
+          <span class="text-emerald-500 mt-0.5 shrink-0 font-bold">+</span>
           {pro}
         </li>
       ))}
     </ul>
   </div>
 
-  <div class="p-5 bg-red-50 border border-red-200 rounded-xl">
-    <h3 class="font-bold text-red-800 mb-3 flex items-center gap-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 6L6 18M6 6l12 12" />
-      </svg>
+  <div class="p-6 bg-gradient-to-br from-red-50 to-rose-50 border border-red-200/60 rounded-2xl">
+    <h3 class="font-bold text-red-800 mb-4 flex items-center gap-2.5 text-base">
+      <div class="w-7 h-7 rounded-full bg-red-500 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </div>
       Nachteile
     </h3>
-    <ul class="space-y-2">
+    <ul class="space-y-2.5">
       {cons.map((con) => (
-        <li class="flex items-start gap-2 text-sm text-red-900">
-          <span class="text-red-500 mt-0.5">-</span>
+        <li class="flex items-start gap-2.5 text-sm text-red-900 leading-relaxed">
+          <span class="text-red-500 mt-0.5 shrink-0 font-bold">-</span>
           {con}
         </li>
       ))}
