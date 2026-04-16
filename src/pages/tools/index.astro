@@ -49,7 +49,7 @@ const categories = [...new Set(posts.map((p) => p.data.category))];
                         {post.data.description}
                       </td>
                       <td class="py-3">
-                        <a href={`/blog/${post.slug}`} class="text-primary hover:underline">
+                        <a href={`/blog/${post.id.replace(/\.mdx?$/, "")}`} class="text-primary hover:underline">
                           Lesen →
                         </a>
                       </td>

@@ -50,7 +50,7 @@ const posts = (await getCollection("blog"))
             <ArticleCard
               title={post.data.title}
               description={post.data.description}
-              slug={post.slug}
+              slug={post.id.replace(/\.mdx?$/, "")}
               pubDate={post.data.pubDate}
               heroImage={post.data.heroImage}
               category={post.data.category}
